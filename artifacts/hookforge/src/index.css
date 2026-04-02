@@ -134,3 +134,42 @@
     @apply font-sans antialiased bg-background text-foreground;
   }
 }
+
+@layer components {
+  .paypal-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background-color: #FFC439;
+    color: #003087;
+    font-weight: 700;
+    font-size: 0.875rem;
+    padding: 0.6rem 1.25rem;
+    border-radius: 0.625rem;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+    box-shadow: 0 2px 8px rgba(255, 196, 57, 0.25);
+    white-space: nowrap;
+  }
+
+  .paypal-logo {
+    font-weight: 900;
+    font-size: 1rem;
+    letter-spacing: -0.02em;
+    font-style: italic;
+    line-height: 1;
+  }
+
+  .paypal-btn:hover {
+    background-color: #f0b429;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 16px rgba(255, 196, 57, 0.40);
+  }
+
+  .paypal-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 8px rgba(255, 196, 57, 0.25);
+  }
+}

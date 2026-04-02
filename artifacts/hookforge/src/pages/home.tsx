@@ -123,18 +123,33 @@ export default function Home() {
           </div>
         </form>
         
-        <div className="mt-4 flex justify-center items-center text-sm text-muted-foreground font-medium">
-          {!isLimitReached ? (
-            <span className="flex items-center">
-              <span className="w-2 h-2 rounded-full bg-green-500 mr-2 animate-pulse" />
-              {remainingRequests} free {remainingRequests === 1 ? 'script' : 'scripts'} remaining today
+        <div className="mt-4 flex flex-col items-center gap-3">
+          <div className="flex justify-center items-center text-sm text-muted-foreground font-medium">
+            {!isLimitReached ? (
+              <span className="flex items-center">
+                <span className="w-2 h-2 rounded-full bg-green-500 mr-2 animate-pulse" />
+                {remainingRequests} free {remainingRequests === 1 ? 'script' : 'scripts'} remaining today
+              </span>
+            ) : (
+              <span className="flex items-center text-destructive">
+                <AlertCircle className="w-4 h-4 mr-1.5" />
+                Free limit reached
+              </span>
+            )}
+          </div>
+
+          {/* PayPal Button */}
+          <a
+            href="https://www.paypal.com/ncp/payment/FXKFKNT7GK4R4"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="paypal-btn"
+          >
+            <span className="paypal-logo" aria-hidden="true">
+              <span style={{ color: "#003087" }}>Pay</span><span style={{ color: "#009cde" }}>Pal</span>
             </span>
-          ) : (
-            <span className="flex items-center text-destructive">
-              <AlertCircle className="w-4 h-4 mr-1.5" />
-              Free limit reached
-            </span>
-          )}
+            Pay with PayPal — Unlock Unlimited
+          </a>
         </div>
       </div>
 
