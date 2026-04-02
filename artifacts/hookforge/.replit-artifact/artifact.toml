@@ -1,0 +1,31 @@
+kind = "web"
+previewPath = "/"
+title = "HookForge"
+version = "1.0.0"
+id = "artifacts/hookforge"
+router = "path"
+
+[[integratedSkills]]
+name = "react-vite"
+version = "1.0.0"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 20429
+
+[services.development]
+run = "pnpm --filter @workspace/hookforge run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/hookforge", "run", "build" ]
+publicDir = "artifacts/hookforge/dist/public"
+serve = "static"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "20429"
+BASE_PATH = "/"

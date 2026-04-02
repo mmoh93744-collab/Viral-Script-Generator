@@ -14,3 +14,21 @@ import * as zod from "zod";
 export const HealthCheckResponse = zod.object({
   status: zod.string(),
 });
+
+/**
+ * Generates a viral YouTube Shorts script using AI based on a topic
+ * @summary Generate viral YouTube Shorts script
+ */
+export const GenerateScriptBody = zod.object({
+  topic: zod
+    .string()
+    .describe("The topic to generate a viral YouTube Shorts script for"),
+});
+
+export const GenerateScriptResponse = zod.object({
+  hook: zod
+    .string()
+    .describe("The attention-grabbing opening line (first 3 seconds)"),
+  body: zod.string().describe("The core content with curiosity and value"),
+  cta: zod.string().describe("The call to action at the end"),
+});

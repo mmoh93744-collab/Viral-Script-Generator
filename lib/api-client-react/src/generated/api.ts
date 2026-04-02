@@ -5,18 +5,26 @@
  * API specification
  * OpenAPI spec version: 0.1.0
  */
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import type {
+  MutationFunction,
   QueryFunction,
   QueryKey,
+  UseMutationOptions,
+  UseMutationResult,
   UseQueryOptions,
   UseQueryResult,
 } from "@tanstack/react-query";
 
-import type { HealthStatus } from "./api.schemas";
+import type {
+  ErrorResponse,
+  GenerateScriptBody,
+  GeneratedScript,
+  HealthStatus,
+} from "./api.schemas";
 
 import { customFetch } from "../custom-fetch";
-import type { ErrorType } from "../custom-fetch";
+import type { ErrorType, BodyType } from "../custom-fetch";
 
 type AwaitedInput<T> = PromiseLike<T> | T;
 
@@ -99,3 +107,90 @@ export function useHealthCheck<
 
   return { ...query, queryKey: queryOptions.queryKey };
 }
+
+/**
+ * Generates a viral YouTube Shorts script using AI based on a topic
+ * @summary Generate viral YouTube Shorts script
+ */
+export const getGenerateScriptUrl = () => {
+  return `/api/generate`;
+};
+
+export const generateScript = async (
+  generateScriptBody: GenerateScriptBody,
+  options?: RequestInit,
+): Promise<GeneratedScript> => {
+  return customFetch<GeneratedScript>(getGenerateScriptUrl(), {
+    ...options,
+    method: "POST",
+    headers: { "Content-Type": "application/json", ...options?.headers },
+    body: JSON.stringify(generateScriptBody),
+  });
+};
+
+export const getGenerateScriptMutationOptions = <
+  TError = ErrorType<ErrorResponse>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof generateScript>>,
+    TError,
+    { data: BodyType<GenerateScriptBody> },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof generateScript>>,
+  TError,
+  { data: BodyType<GenerateScriptBody> },
+  TContext
+> => {
+  const mutationKey = ["generateScript"];
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      "mutationKey" in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof generateScript>>,
+    { data: BodyType<GenerateScriptBody> }
+  > = (props) => {
+    const { data } = props ?? {};
+
+    return generateScript(data, requestOptions);
+  };
+
+  return { mutationFn, ...mutationOptions };
+};
+
+export type GenerateScriptMutationResult = NonNullable<
+  Awaited<ReturnType<typeof generateScript>>
+>;
+export type GenerateScriptMutationBody = BodyType<GenerateScriptBody>;
+export type GenerateScriptMutationError = ErrorType<ErrorResponse>;
+
+/**
+ * @summary Generate viral YouTube Shorts script
+ */
+export const useGenerateScript = <
+  TError = ErrorType<ErrorResponse>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof generateScript>>,
+    TError,
+    { data: BodyType<GenerateScriptBody> },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationResult<
+  Awaited<ReturnType<typeof generateScript>>,
+  TError,
+  { data: BodyType<GenerateScriptBody> },
+  TContext
+> => {
+  return useMutation(getGenerateScriptMutationOptions(options));
+};

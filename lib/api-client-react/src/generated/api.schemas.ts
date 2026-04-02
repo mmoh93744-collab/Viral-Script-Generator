@@ -8,3 +8,21 @@
 export interface HealthStatus {
   status: string;
 }
+
+export interface GenerateScriptBody {
+  /** The topic to generate a viral YouTube Shorts script for */
+  topic: string;
+}
+
+export interface GeneratedScript {
+  /** The attention-grabbing opening line (first 3 seconds) */
+  hook: string;
+  /** The core content with curiosity and value */
+  body: string;
+  /** The call to action at the end */
+  cta: string;
+}
+
+export interface ErrorResponse {
+  error: string;
+}

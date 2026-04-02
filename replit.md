@@ -15,6 +15,7 @@ pnpm workspace monorepo using TypeScript. Each package manages its own dependenc
 - **Validation**: Zod (`zod/v4`), `drizzle-zod`
 - **API codegen**: Orval (from OpenAPI spec)
 - **Build**: esbuild (CJS bundle)
+- **AI**: OpenAI via Replit AI Integrations (gpt-5.2)
 
 ## Key Commands
 
@@ -25,3 +26,22 @@ pnpm workspace monorepo using TypeScript. Each package manages its own dependenc
 - `pnpm --filter @workspace/api-server run dev` — run API server locally
 
 See the `pnpm-workspace` skill for workspace structure, TypeScript setup, and package details.
+
+## Artifacts
+
+### HookForge (`artifacts/hookforge`)
+- **Preview path**: `/`
+- **Purpose**: Viral YouTube Shorts script generator using AI
+- **Frontend**: React + Vite, dark theme, electric orange accent color (#FF4500)
+- **Backend**: Express API with `/api/generate` endpoint
+- **AI**: OpenAI gpt-5.2 via Replit AI Integrations
+- **Free limit**: 2 requests per IP (in-memory, resets on server restart)
+- **Monetization**: Stripe upgrade placeholder shown after limit
+
+## API Routes
+
+- `GET /api/healthz` — health check
+- `POST /api/generate` — generate viral YouTube Shorts script
+  - Body: `{ topic: string }`
+  - Response: `{ hook, body, cta, remainingRequests, isLimitReached }`
+  - 429 when free limit (2/day) reached with `{ error: "FREE_LIMIT_REACHED" }`

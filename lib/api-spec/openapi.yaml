@@ -10,6 +10,8 @@ servers:
 tags:
   - name: health
     description: Health operations
+  - name: scripts
+    description: Script generation operations
 paths:
   /healthz:
     get:
@@ -24,6 +26,43 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+  /generate:
+    post:
+      operationId: generateScript
+      tags: [scripts]
+      summary: Generate viral YouTube Shorts script
+      description: Generates a viral YouTube Shorts script using AI based on a topic
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GenerateScriptBody"
+      responses:
+        "200":
+          description: Generated script
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GeneratedScript"
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "429":
+          description: Rate limit exceeded
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
 components:
   schemas:
     HealthStatus:
@@ -33,4 +72,34 @@ components:
           type: string
       required:
         - status
-
+    GenerateScriptBody:
+      type: object
+      properties:
+        topic:
+          type: string
+          description: The topic to generate a viral YouTube Shorts script for
+      required:
+        - topic
+    GeneratedScript:
+      type: object
+      properties:
+        hook:
+          type: string
+          description: The attention-grabbing opening line (first 3 seconds)
+        body:
+          type: string
+          description: The core content with curiosity and value
+        cta:
+          type: string
+          description: The call to action at the end
+      required:
+        - hook
+        - body
+        - cta
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+      required:
+        - error
