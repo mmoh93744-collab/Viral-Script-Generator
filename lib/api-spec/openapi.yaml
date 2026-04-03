@@ -12,6 +12,8 @@ tags:
     description: Health operations
   - name: scripts
     description: Script generation operations
+  - name: analyze
+    description: Competitor video analysis operations
 paths:
   /healthz:
     get:
@@ -63,6 +65,43 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
+  /analyze:
+    post:
+      operationId: analyzeVideo
+      tags: [analyze]
+      summary: Analyze competitor video and generate improved viral script
+      description: Takes a YouTube video URL and generates full analysis, improved script, SEO, performance predictions, and multiple versions
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AnalyzeVideoBody"
+      responses:
+        "200":
+          description: Full video analysis result
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/VideoAnalysisResult"
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "429":
+          description: Rate limit exceeded
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
 components:
   schemas:
     HealthStatus:
@@ -85,17 +124,151 @@ components:
       properties:
         hook:
           type: string
-          description: The attention-grabbing opening line (first 3 seconds)
         body:
           type: string
-          description: The core content with curiosity and value
         cta:
           type: string
-          description: The call to action at the end
       required:
         - hook
         - body
         - cta
+    AnalyzeVideoBody:
+      type: object
+      properties:
+        url:
+          type: string
+          description: YouTube video URL to analyze
+      required:
+        - url
+    VideoAnalysis:
+      type: object
+      properties:
+        hook_analysis:
+          type: string
+          description: Why the first 3 seconds grab viewers
+        structure:
+          type: string
+          description: Key scenes and video structure
+        strengths:
+          type: string
+          description: What makes this video successful
+        weaknesses:
+          type: string
+          description: What can be improved
+      required:
+        - hook_analysis
+        - structure
+        - strengths
+        - weaknesses
+    ImprovedScript:
+      type: object
+      properties:
+        hook:
+          type: string
+          description: Stronger hook suggestion
+        intro:
+          type: string
+          description: Opening section of the improved script
+        main_content:
+          type: string
+          description: Core content of the improved script
+        cta:
+          type: string
+          description: Call to action
+        style:
+          type: string
+          description: Suggested style (funny / shocking / educational / challenge / story)
+        additional_scenes:
+          type: string
+          description: Additional scenes or edits to maximize retention
+      required:
+        - hook
+        - intro
+        - main_content
+        - cta
+        - style
+        - additional_scenes
+    SEOData:
+      type: object
+      properties:
+        title:
+          type: string
+          description: Engaging video title
+        description:
+          type: string
+          description: Short, catchy description
+        hashtags:
+          type: array
+          items:
+            type: string
+          description: Trending relevant hashtags
+      required:
+        - title
+        - description
+        - hashtags
+    PerformanceEstimate:
+      type: object
+      properties:
+        views_24h:
+          type: string
+          description: Predicted views in 24 hours
+        views_7d:
+          type: string
+          description: Predicted views in 7 days
+        retention_score:
+          type: string
+          description: Viewer retention score as percentage
+        virality_score:
+          type: string
+          description: Virality potential score out of 10
+      required:
+        - views_24h
+        - views_7d
+        - retention_score
+        - virality_score
+    VideoVersion:
+      type: object
+      properties:
+        style:
+          type: string
+          description: Style of this version
+        hook:
+          type: string
+        script:
+          type: string
+          description: Full script for this version
+        why_it_works:
+          type: string
+      required:
+        - style
+        - hook
+        - script
+        - why_it_works
+    VideoAnalysisResult:
+      type: object
+      properties:
+        topic:
+          type: string
+          description: The inferred topic of the video
+        video_analysis:
+          $ref: "#/components/schemas/VideoAnalysis"
+        improved_script:
+          $ref: "#/components/schemas/ImprovedScript"
+        seo:
+          $ref: "#/components/schemas/SEOData"
+        performance_estimate:
+          $ref: "#/components/schemas/PerformanceEstimate"
+        multiple_versions:
+          type: array
+          items:
+            $ref: "#/components/schemas/VideoVersion"
+      required:
+        - topic
+        - video_analysis
+        - improved_script
+        - seo
+        - performance_estimate
+        - multiple_versions
     ErrorResponse:
       type: object
       properties:

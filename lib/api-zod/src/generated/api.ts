@@ -26,9 +26,62 @@ export const GenerateScriptBody = zod.object({
 });
 
 export const GenerateScriptResponse = zod.object({
-  hook: zod
-    .string()
-    .describe("The attention-grabbing opening line (first 3 seconds)"),
-  body: zod.string().describe("The core content with curiosity and value"),
-  cta: zod.string().describe("The call to action at the end"),
+  hook: zod.string(),
+  body: zod.string(),
+  cta: zod.string(),
+});
+
+/**
+ * Takes a YouTube video URL and generates full analysis, improved script, SEO, performance predictions, and multiple versions
+ * @summary Analyze competitor video and generate improved viral script
+ */
+export const AnalyzeVideoBody = zod.object({
+  url: zod.string().describe("YouTube video URL to analyze"),
+});
+
+export const AnalyzeVideoResponse = zod.object({
+  topic: zod.string().describe("The inferred topic of the video"),
+  video_analysis: zod.object({
+    hook_analysis: zod
+      .string()
+      .describe("Why the first 3 seconds grab viewers"),
+    structure: zod.string().describe("Key scenes and video structure"),
+    strengths: zod.string().describe("What makes this video successful"),
+    weaknesses: zod.string().describe("What can be improved"),
+  }),
+  improved_script: zod.object({
+    hook: zod.string().describe("Stronger hook suggestion"),
+    intro: zod.string().describe("Opening section of the improved script"),
+    main_content: zod.string().describe("Core content of the improved script"),
+    cta: zod.string().describe("Call to action"),
+    style: zod
+      .string()
+      .describe(
+        "Suggested style (funny \/ shocking \/ educational \/ challenge \/ story)",
+      ),
+    additional_scenes: zod
+      .string()
+      .describe("Additional scenes or edits to maximize retention"),
+  }),
+  seo: zod.object({
+    title: zod.string().describe("Engaging video title"),
+    description: zod.string().describe("Short, catchy description"),
+    hashtags: zod.array(zod.string()).describe("Trending relevant hashtags"),
+  }),
+  performance_estimate: zod.object({
+    views_24h: zod.string().describe("Predicted views in 24 hours"),
+    views_7d: zod.string().describe("Predicted views in 7 days"),
+    retention_score: zod
+      .string()
+      .describe("Viewer retention score as percentage"),
+    virality_score: zod.string().describe("Virality potential score out of 10"),
+  }),
+  multiple_versions: zod.array(
+    zod.object({
+      style: zod.string().describe("Style of this version"),
+      hook: zod.string(),
+      script: zod.string().describe("Full script for this version"),
+      why_it_works: zod.string(),
+    }),
+  ),
 });

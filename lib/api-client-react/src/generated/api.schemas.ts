@@ -15,12 +15,79 @@ export interface GenerateScriptBody {
 }
 
 export interface GeneratedScript {
-  /** The attention-grabbing opening line (first 3 seconds) */
   hook: string;
-  /** The core content with curiosity and value */
   body: string;
-  /** The call to action at the end */
   cta: string;
+}
+
+export interface AnalyzeVideoBody {
+  /** YouTube video URL to analyze */
+  url: string;
+}
+
+export interface VideoAnalysis {
+  /** Why the first 3 seconds grab viewers */
+  hook_analysis: string;
+  /** Key scenes and video structure */
+  structure: string;
+  /** What makes this video successful */
+  strengths: string;
+  /** What can be improved */
+  weaknesses: string;
+}
+
+export interface ImprovedScript {
+  /** Stronger hook suggestion */
+  hook: string;
+  /** Opening section of the improved script */
+  intro: string;
+  /** Core content of the improved script */
+  main_content: string;
+  /** Call to action */
+  cta: string;
+  /** Suggested style (funny / shocking / educational / challenge / story) */
+  style: string;
+  /** Additional scenes or edits to maximize retention */
+  additional_scenes: string;
+}
+
+export interface SEOData {
+  /** Engaging video title */
+  title: string;
+  /** Short, catchy description */
+  description: string;
+  /** Trending relevant hashtags */
+  hashtags: string[];
+}
+
+export interface PerformanceEstimate {
+  /** Predicted views in 24 hours */
+  views_24h: string;
+  /** Predicted views in 7 days */
+  views_7d: string;
+  /** Viewer retention score as percentage */
+  retention_score: string;
+  /** Virality potential score out of 10 */
+  virality_score: string;
+}
+
+export interface VideoVersion {
+  /** Style of this version */
+  style: string;
+  hook: string;
+  /** Full script for this version */
+  script: string;
+  why_it_works: string;
+}
+
+export interface VideoAnalysisResult {
+  /** The inferred topic of the video */
+  topic: string;
+  video_analysis: VideoAnalysis;
+  improved_script: ImprovedScript;
+  seo: SEOData;
+  performance_estimate: PerformanceEstimate;
+  multiple_versions: VideoVersion[];
 }
 
 export interface ErrorResponse {

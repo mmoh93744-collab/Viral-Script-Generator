@@ -6,7 +6,14 @@
  * OpenAPI spec version: 0.1.0
  */
 
+export * from "./analyzeVideoBody";
 export * from "./errorResponse";
 export * from "./generatedScript";
 export * from "./generateScriptBody";
 export * from "./healthStatus";
+export * from "./improvedScript";
+export * from "./performanceEstimate";
+export * from "./sEOData";
+export * from "./videoAnalysis";
+export * from "./videoAnalysisResult";
+export * from "./videoVersion";

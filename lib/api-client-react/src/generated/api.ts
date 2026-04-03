@@ -17,10 +17,12 @@ import type {
 } from "@tanstack/react-query";
 
 import type {
+  AnalyzeVideoBody,
   ErrorResponse,
   GenerateScriptBody,
   GeneratedScript,
   HealthStatus,
+  VideoAnalysisResult,
 } from "./api.schemas";
 
 import { customFetch } from "../custom-fetch";
@@ -193,4 +195,91 @@ export const useGenerateScript = <
   TContext
 > => {
   return useMutation(getGenerateScriptMutationOptions(options));
+};
+
+/**
+ * Takes a YouTube video URL and generates full analysis, improved script, SEO, performance predictions, and multiple versions
+ * @summary Analyze competitor video and generate improved viral script
+ */
+export const getAnalyzeVideoUrl = () => {
+  return `/api/analyze`;
+};
+
+export const analyzeVideo = async (
+  analyzeVideoBody: AnalyzeVideoBody,
+  options?: RequestInit,
+): Promise<VideoAnalysisResult> => {
+  return customFetch<VideoAnalysisResult>(getAnalyzeVideoUrl(), {
+    ...options,
+    method: "POST",
+    headers: { "Content-Type": "application/json", ...options?.headers },
+    body: JSON.stringify(analyzeVideoBody),
+  });
+};
+
+export const getAnalyzeVideoMutationOptions = <
+  TError = ErrorType<ErrorResponse>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof analyzeVideo>>,
+    TError,
+    { data: BodyType<AnalyzeVideoBody> },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof analyzeVideo>>,
+  TError,
+  { data: BodyType<AnalyzeVideoBody> },
+  TContext
+> => {
+  const mutationKey = ["analyzeVideo"];
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      "mutationKey" in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof analyzeVideo>>,
+    { data: BodyType<AnalyzeVideoBody> }
+  > = (props) => {
+    const { data } = props ?? {};
+
+    return analyzeVideo(data, requestOptions);
+  };
+
+  return { mutationFn, ...mutationOptions };
+};
+
+export type AnalyzeVideoMutationResult = NonNullable<
+  Awaited<ReturnType<typeof analyzeVideo>>
+>;
+export type AnalyzeVideoMutationBody = BodyType<AnalyzeVideoBody>;
+export type AnalyzeVideoMutationError = ErrorType<ErrorResponse>;
+
+/**
+ * @summary Analyze competitor video and generate improved viral script
+ */
+export const useAnalyzeVideo = <
+  TError = ErrorType<ErrorResponse>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof analyzeVideo>>,
+    TError,
+    { data: BodyType<AnalyzeVideoBody> },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationResult<
+  Awaited<ReturnType<typeof analyzeVideo>>,
+  TError,
+  { data: BodyType<AnalyzeVideoBody> },
+  TContext
+> => {
+  return useMutation(getAnalyzeVideoMutationOptions(options));
 };
