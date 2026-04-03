@@ -1,0 +1,48 @@
+You are an expert AI web designer specialized in creating **high-converting, visually interactive, and ultra-fast websites**. Your task: generate a **monthly subscription page for $6** for a website called "ViralAI". The page must be **modern, attractive, interactive**, and **optimized for speed** without affecting animations or visual appeal.
+
+### Requirements:
+
+1️⃣ **Hero Section**:
+- Headline: "Unlock Unlimited Viral Scripts for Just $6/Month 🚀"
+- Subtitle: "Generate scripts instantly, with SEO-ready titles, hashtags, and performance predictions"
+- Background: dynamic gradient or subtle particle animation (optimized for low CPU usage)
+
+2️⃣ **Features Section**:
+- 3–5 feature cards (animated on hover, fade-in, slide-up)
+- Features: Unlimited Scripts, SEO & Hashtags, Performance Prediction, Interactive AI UI
+- Use **minimal DOM elements** and **CSS animations instead of heavy JS animations**
+
+3️⃣ **CTA Button**:
+- Text: "Subscribe Now – $6 Only 💸"
+- Big, bright orange button with glow + scale hover effect
+- Optional: floating sparkles implemented efficiently (CSS animations)
+
+4️⃣ **Payment Integration**:
+- Placeholder for Stripe Checkout or PayPal Smart Button
+- Monthly plan $6
+- Ensure fast-loading script, minimal network requests
+
+5️⃣ **Performance Optimizations**:
+- Minify CSS/JS
+- Use WebP or SVG images
+- Lazy-load all images/videos (`loading="lazy"`)
+- Use CDN for libraries like GSAP or FontAwesome
+- Only animate elements in viewport
+- Reduce DOM elements and repaints
+- CSS animations preferred over JS when possible
+
+6️⃣ **Trust & Scarcity Section**:
+- Badges: "Trusted by 1,000+ creators", "Cancel anytime"
+- Optional: animated badge "Limited spots – Join Now!"
+
+7️⃣ **Extras for Engagement**:
+- Micro-interactions: hover effects reveal extra info
+- Countdown timer: "Next viral script generated in: 00:03:25"
+- Confetti/particles on hover or successful subscription
+
+### Output:
+- Provide **ready-to-use HTML/CSS/JS code**
+- Fully responsive and visually appealing
+- Fast-loading, optimized animations
+- Highlight $6/month subscription prominently
+- Include all visual effects and interactions without slowing the page
