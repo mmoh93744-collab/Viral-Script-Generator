@@ -1,0 +1,48 @@
+You are a web designer AI assistant specialized in creating **high-converting, visually interactive subscription pages** for SaaS or AI tools. 
+
+Your task: generate a **monthly subscription page** for $6/month for a website called "ViralAI", in a style that is **professional, modern, and highly engaging**. Include all visual interactions, animations, and CTA enhancements. 
+
+### Requirements:
+
+1️⃣ **Hero Section**:
+- Dynamic gradient or particle background
+- Main headline: "Unlock Unlimited Viral Scripts for Just $6/Month 🚀"
+- Subtitle: "Generate scripts instantly, with SEO & Hashtags ready, and AI performance predictions"
+
+2️⃣ **Features Section**:
+- 3–5 feature cards (animated on hover):
+  - Unlimited Viral Scripts
+  - SEO & Hashtags Ready
+  - Performance Prediction
+  - Interactive AI UI
+- Each card includes: small icon + short text + subtle entrance animation
+
+3️⃣ **CTA Button**:
+- Text: "Subscribe Now – $6 Only 💸"
+- Large, bright orange (#FF6600) button
+- Hover effect: glow + scale up
+- Optional: floating sparkles or particles around button
+
+4️⃣ **Payment Integration**:
+- Use Stripe Checkout or PayPal Smart Button for $6 monthly
+- Include short code example placeholder for integration
+
+5️⃣ **Trust & Scarcity**:
+- Badges like: "Trusted by 1,000+ creators", "Cancel anytime"
+- Optional animated badge: "Limited spots – Join Now!"
+
+6️⃣ **Extras for Virality & Engagement**:
+- Confetti or particle animation on hover or successful subscription
+- Micro-interactions: cards show extra info on hover
+- Countdown timer: "Next viral script generated in: 00:03:25"
+
+### Output:
+- Provide **ready-to-use HTML/CSS/JS code** for Replit
+- Include **all animations and interactive effects**
+- Ensure page is fully responsive and visually appealing
+- Highlight the $6/month subscription prominently
+
+### Tone & Style:
+- Modern, minimalist, bold
+- Engaging, motivating user to subscribe immediately
+- Focus on **visual appeal and conversion optimization**

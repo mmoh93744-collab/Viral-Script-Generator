@@ -4,12 +4,13 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Loader2, Sparkles, Zap, Lock, RefreshCw, AlertCircle, Search } from "lucide-react";
+import { Loader2, Sparkles, Zap, Lock, RefreshCw, AlertCircle, Search, Crown } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import type { GeneratedScript } from "@workspace/api-client-react";
 import Analyzer from "@/pages/analyzer";
+import Pricing from "@/pages/pricing";
 
-type Tab = "generate" | "analyze";
+type Tab = "generate" | "analyze" | "pro";
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState<Tab>("generate");
@@ -43,7 +44,7 @@ export default function Home() {
             }`}
           >
             <Sparkles className="w-4 h-4" />
-            Generate Script
+            Generate
           </button>
           <button
             onClick={() => setActiveTab("analyze")}
@@ -54,13 +55,26 @@ export default function Home() {
             }`}
           >
             <Search className="w-4 h-4" />
-            Analyze Competitor
+            Analyze
+          </button>
+          <button
+            onClick={() => setActiveTab("pro")}
+            className={`flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-lg text-sm font-bold transition-all ${
+              activeTab === "pro"
+                ? "bg-primary text-white shadow-sm"
+                : "text-muted-foreground hover:text-foreground"
+            }`}
+          >
+            <Crown className="w-4 h-4" />
+            Go Pro 💸
           </button>
         </div>
       </div>
 
       {/* Tab Content */}
-      {activeTab === "generate" ? <Generator /> : <Analyzer />}
+      {activeTab === "generate" && <Generator />}
+      {activeTab === "analyze" && <Analyzer />}
+      {activeTab === "pro" && <Pricing />}
     </div>
   );
 }
