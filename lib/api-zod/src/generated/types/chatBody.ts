@@ -5,7 +5,9 @@
  * API specification
  * OpenAPI spec version: 0.1.0
  */
+import type { ChatMessage } from "./chatMessage";
 
-export interface GenerateScriptBody {
-  topic: string;
+export interface ChatBody {
+  messages: ChatMessage[];
+  platform?: string;
 }

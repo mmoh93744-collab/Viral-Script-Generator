@@ -8,7 +8,6 @@
 import * as zod from "zod";
 
 /**
- * Returns server health status
  * @summary Health check
  */
 export const HealthCheckResponse = zod.object({
@@ -16,13 +15,10 @@ export const HealthCheckResponse = zod.object({
 });
 
 /**
- * Generates a viral YouTube Shorts script using AI based on a topic
  * @summary Generate viral YouTube Shorts script
  */
 export const GenerateScriptBody = zod.object({
-  topic: zod
-    .string()
-    .describe("The topic to generate a viral YouTube Shorts script for"),
+  topic: zod.string(),
 });
 
 export const GenerateScriptResponse = zod.object({
@@ -32,56 +28,96 @@ export const GenerateScriptResponse = zod.object({
 });
 
 /**
- * Takes a YouTube video URL and generates full analysis, improved script, SEO, performance predictions, and multiple versions
  * @summary Analyze competitor video and generate improved viral script
  */
 export const AnalyzeVideoBody = zod.object({
-  url: zod.string().describe("YouTube video URL to analyze"),
+  url: zod.string(),
 });
 
 export const AnalyzeVideoResponse = zod.object({
-  topic: zod.string().describe("The inferred topic of the video"),
+  topic: zod.string(),
   video_analysis: zod.object({
-    hook_analysis: zod
-      .string()
-      .describe("Why the first 3 seconds grab viewers"),
-    structure: zod.string().describe("Key scenes and video structure"),
-    strengths: zod.string().describe("What makes this video successful"),
-    weaknesses: zod.string().describe("What can be improved"),
+    hook_analysis: zod.string(),
+    structure: zod.string(),
+    strengths: zod.string(),
+    weaknesses: zod.string(),
   }),
   improved_script: zod.object({
-    hook: zod.string().describe("Stronger hook suggestion"),
-    intro: zod.string().describe("Opening section of the improved script"),
-    main_content: zod.string().describe("Core content of the improved script"),
-    cta: zod.string().describe("Call to action"),
-    style: zod
-      .string()
-      .describe(
-        "Suggested style (funny \/ shocking \/ educational \/ challenge \/ story)",
-      ),
-    additional_scenes: zod
-      .string()
-      .describe("Additional scenes or edits to maximize retention"),
+    hook: zod.string(),
+    intro: zod.string(),
+    main_content: zod.string(),
+    cta: zod.string(),
+    style: zod.string(),
+    additional_scenes: zod.string(),
   }),
   seo: zod.object({
-    title: zod.string().describe("Engaging video title"),
-    description: zod.string().describe("Short, catchy description"),
-    hashtags: zod.array(zod.string()).describe("Trending relevant hashtags"),
+    title: zod.string(),
+    description: zod.string(),
+    hashtags: zod.array(zod.string()),
   }),
   performance_estimate: zod.object({
-    views_24h: zod.string().describe("Predicted views in 24 hours"),
-    views_7d: zod.string().describe("Predicted views in 7 days"),
-    retention_score: zod
-      .string()
-      .describe("Viewer retention score as percentage"),
-    virality_score: zod.string().describe("Virality potential score out of 10"),
+    views_24h: zod.string(),
+    views_7d: zod.string(),
+    retention_score: zod.string(),
+    virality_score: zod.string(),
   }),
   multiple_versions: zod.array(
     zod.object({
-      style: zod.string().describe("Style of this version"),
+      style: zod.string(),
       hook: zod.string(),
-      script: zod.string().describe("Full script for this version"),
+      script: zod.string(),
       why_it_works: zod.string(),
     }),
   ),
+});
+
+/**
+ * @summary Chat with AI growth advisor
+ */
+export const ChatWithAIBody = zod.object({
+  messages: zod.array(
+    zod.object({
+      role: zod.enum(["user", "assistant"]),
+      content: zod.string(),
+    }),
+  ),
+  platform: zod.string().optional(),
+});
+
+export const ChatWithAIResponse = zod.object({
+  reply: zod.string(),
+  remainingChats: zod.number().optional(),
+  isLimitReached: zod.boolean().optional(),
+});
+
+/**
+ * @summary Generate clip strategy for a video URL
+ */
+export const AnalyzeClipsBody = zod.object({
+  url: zod.string(),
+  platform: zod.string().optional(),
+});
+
+export const AnalyzeClipsResponse = zod.object({
+  topic: zod.string(),
+  total_clips: zod.number(),
+  best_clip_index: zod.number(),
+  clips: zod.array(
+    zod.object({
+      clip_number: zod.number(),
+      title: zod.string(),
+      timestamp_start: zod.string(),
+      timestamp_end: zod.string(),
+      hook: zod.string(),
+      why_viral: zod.string(),
+      platform_fit: zod.array(zod.string()),
+    }),
+  ),
+  platform_tips: zod.object({
+    tiktok: zod.string(),
+    youtube_shorts: zod.string(),
+    instagram_reels: zod.string(),
+  }),
+  caption: zod.string(),
+  hashtags: zod.array(zod.string()),
 });

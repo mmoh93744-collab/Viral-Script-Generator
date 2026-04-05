@@ -7,12 +7,8 @@
  */
 
 export interface VideoAnalysis {
-  /** Why the first 3 seconds grab viewers */
   hook_analysis: string;
-  /** Key scenes and video structure */
   structure: string;
-  /** What makes this video successful */
   strengths: string;
-  /** What can be improved */
   weaknesses: string;
 }

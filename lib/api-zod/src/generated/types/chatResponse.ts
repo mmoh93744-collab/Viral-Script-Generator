@@ -6,6 +6,8 @@
  * OpenAPI spec version: 0.1.0
  */
 
-export interface GenerateScriptBody {
-  topic: string;
+export interface ChatResponse {
+  reply: string;
+  remainingChats?: number;
+  isLimitReached?: boolean;
 }

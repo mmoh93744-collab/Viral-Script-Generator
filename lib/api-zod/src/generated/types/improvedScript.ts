@@ -7,16 +7,10 @@
  */
 
 export interface ImprovedScript {
-  /** Stronger hook suggestion */
   hook: string;
-  /** Opening section of the improved script */
   intro: string;
-  /** Core content of the improved script */
   main_content: string;
-  /** Call to action */
   cta: string;
-  /** Suggested style (funny / shocking / educational / challenge / story) */
   style: string;
-  /** Additional scenes or edits to maximize retention */
   additional_scenes: string;
 }

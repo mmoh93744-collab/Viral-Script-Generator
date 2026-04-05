@@ -18,6 +18,10 @@ import type {
 
 import type {
   AnalyzeVideoBody,
+  ChatBody,
+  ChatResponse,
+  ClipAnalysisResult,
+  ClipAnalyzeBody,
   ErrorResponse,
   GenerateScriptBody,
   GeneratedScript,
@@ -35,7 +39,6 @@ type Awaited<O> = O extends AwaitedInput<infer T> ? T : never;
 type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
 
 /**
- * Returns server health status
  * @summary Health check
  */
 export const getHealthCheckUrl = () => {
@@ -111,7 +114,6 @@ export function useHealthCheck<
 }
 
 /**
- * Generates a viral YouTube Shorts script using AI based on a topic
  * @summary Generate viral YouTube Shorts script
  */
 export const getGenerateScriptUrl = () => {
@@ -198,7 +200,6 @@ export const useGenerateScript = <
 };
 
 /**
- * Takes a YouTube video URL and generates full analysis, improved script, SEO, performance predictions, and multiple versions
  * @summary Analyze competitor video and generate improved viral script
  */
 export const getAnalyzeVideoUrl = () => {
@@ -282,4 +283,176 @@ export const useAnalyzeVideo = <
   TContext
 > => {
   return useMutation(getAnalyzeVideoMutationOptions(options));
+};
+
+/**
+ * @summary Chat with AI growth advisor
+ */
+export const getChatWithAIUrl = () => {
+  return `/api/chat`;
+};
+
+export const chatWithAI = async (
+  chatBody: ChatBody,
+  options?: RequestInit,
+): Promise<ChatResponse> => {
+  return customFetch<ChatResponse>(getChatWithAIUrl(), {
+    ...options,
+    method: "POST",
+    headers: { "Content-Type": "application/json", ...options?.headers },
+    body: JSON.stringify(chatBody),
+  });
+};
+
+export const getChatWithAIMutationOptions = <
+  TError = ErrorType<ErrorResponse>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof chatWithAI>>,
+    TError,
+    { data: BodyType<ChatBody> },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof chatWithAI>>,
+  TError,
+  { data: BodyType<ChatBody> },
+  TContext
+> => {
+  const mutationKey = ["chatWithAI"];
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      "mutationKey" in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof chatWithAI>>,
+    { data: BodyType<ChatBody> }
+  > = (props) => {
+    const { data } = props ?? {};
+
+    return chatWithAI(data, requestOptions);
+  };
+
+  return { mutationFn, ...mutationOptions };
+};
+
+export type ChatWithAIMutationResult = NonNullable<
+  Awaited<ReturnType<typeof chatWithAI>>
+>;
+export type ChatWithAIMutationBody = BodyType<ChatBody>;
+export type ChatWithAIMutationError = ErrorType<ErrorResponse>;
+
+/**
+ * @summary Chat with AI growth advisor
+ */
+export const useChatWithAI = <
+  TError = ErrorType<ErrorResponse>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof chatWithAI>>,
+    TError,
+    { data: BodyType<ChatBody> },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationResult<
+  Awaited<ReturnType<typeof chatWithAI>>,
+  TError,
+  { data: BodyType<ChatBody> },
+  TContext
+> => {
+  return useMutation(getChatWithAIMutationOptions(options));
+};
+
+/**
+ * @summary Generate clip strategy for a video URL
+ */
+export const getAnalyzeClipsUrl = () => {
+  return `/api/clip-analyze`;
+};
+
+export const analyzeClips = async (
+  clipAnalyzeBody: ClipAnalyzeBody,
+  options?: RequestInit,
+): Promise<ClipAnalysisResult> => {
+  return customFetch<ClipAnalysisResult>(getAnalyzeClipsUrl(), {
+    ...options,
+    method: "POST",
+    headers: { "Content-Type": "application/json", ...options?.headers },
+    body: JSON.stringify(clipAnalyzeBody),
+  });
+};
+
+export const getAnalyzeClipsMutationOptions = <
+  TError = ErrorType<ErrorResponse>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof analyzeClips>>,
+    TError,
+    { data: BodyType<ClipAnalyzeBody> },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof analyzeClips>>,
+  TError,
+  { data: BodyType<ClipAnalyzeBody> },
+  TContext
+> => {
+  const mutationKey = ["analyzeClips"];
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      "mutationKey" in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
+
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof analyzeClips>>,
+    { data: BodyType<ClipAnalyzeBody> }
+  > = (props) => {
+    const { data } = props ?? {};
+
+    return analyzeClips(data, requestOptions);
+  };
+
+  return { mutationFn, ...mutationOptions };
+};
+
+export type AnalyzeClipsMutationResult = NonNullable<
+  Awaited<ReturnType<typeof analyzeClips>>
+>;
+export type AnalyzeClipsMutationBody = BodyType<ClipAnalyzeBody>;
+export type AnalyzeClipsMutationError = ErrorType<ErrorResponse>;
+
+/**
+ * @summary Generate clip strategy for a video URL
+ */
+export const useAnalyzeClips = <
+  TError = ErrorType<ErrorResponse>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof analyzeClips>>,
+    TError,
+    { data: BodyType<ClipAnalyzeBody> },
+    TContext
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseMutationResult<
+  Awaited<ReturnType<typeof analyzeClips>>,
+  TError,
+  { data: BodyType<ClipAnalyzeBody> },
+  TContext
+> => {
+  return useMutation(getAnalyzeClipsMutationOptions(options));
 };

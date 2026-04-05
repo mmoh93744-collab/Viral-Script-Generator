@@ -12,7 +12,6 @@ import type { VideoAnalysis } from "./videoAnalysis";
 import type { VideoVersion } from "./videoVersion";
 
 export interface VideoAnalysisResult {
-  /** The inferred topic of the video */
   topic: string;
   video_analysis: VideoAnalysis;
   improved_script: ImprovedScript;

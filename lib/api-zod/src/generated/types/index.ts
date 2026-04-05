@@ -7,12 +7,20 @@
  */
 
 export * from "./analyzeVideoBody";
+export * from "./chatBody";
+export * from "./chatMessage";
+export * from "./chatMessageRole";
+export * from "./chatResponse";
+export * from "./clipAnalysisResult";
+export * from "./clipAnalyzeBody";
+export * from "./clipSegment";
 export * from "./errorResponse";
 export * from "./generatedScript";
 export * from "./generateScriptBody";
 export * from "./healthStatus";
 export * from "./improvedScript";
 export * from "./performanceEstimate";
+export * from "./platformTips";
 export * from "./sEOData";
 export * from "./videoAnalysis";
 export * from "./videoAnalysisResult";

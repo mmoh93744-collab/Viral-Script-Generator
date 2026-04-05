@@ -7,10 +7,7 @@
  */
 
 export interface SEOData {
-  /** Engaging video title */
   title: string;
-  /** Short, catchy description */
   description: string;
-  /** Trending relevant hashtags */
   hashtags: string[];
 }

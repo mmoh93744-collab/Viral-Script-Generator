@@ -7,10 +7,8 @@
  */
 
 export interface VideoVersion {
-  /** Style of this version */
   style: string;
   hook: string;
-  /** Full script for this version */
   script: string;
   why_it_works: string;
 }

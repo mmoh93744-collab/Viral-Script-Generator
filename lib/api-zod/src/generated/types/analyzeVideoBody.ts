@@ -7,6 +7,5 @@
  */
 
 export interface AnalyzeVideoBody {
-  /** YouTube video URL to analyze */
   url: string;
 }

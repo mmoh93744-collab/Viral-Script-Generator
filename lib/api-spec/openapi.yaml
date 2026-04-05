@@ -1,6 +1,5 @@
 openapi: 3.1.0
 info:
-  # Do not change the title, if the title changes, the import paths will be broken
   title: Api
   version: 0.1.0
   description: API specification
@@ -14,13 +13,16 @@ tags:
     description: Script generation operations
   - name: analyze
     description: Competitor video analysis operations
+  - name: chat
+    description: AI chat operations
+  - name: clips
+    description: Clip strategy operations
 paths:
   /healthz:
     get:
       operationId: healthCheck
       tags: [health]
       summary: Health check
-      description: Returns server health status
       responses:
         "200":
           description: Healthy
@@ -33,7 +35,6 @@ paths:
       operationId: generateScript
       tags: [scripts]
       summary: Generate viral YouTube Shorts script
-      description: Generates a viral YouTube Shorts script using AI based on a topic
       requestBody:
         required: true
         content:
@@ -70,7 +71,6 @@ paths:
       operationId: analyzeVideo
       tags: [analyze]
       summary: Analyze competitor video and generate improved viral script
-      description: Takes a YouTube video URL and generates full analysis, improved script, SEO, performance predictions, and multiple versions
       requestBody:
         required: true
         content:
@@ -102,6 +102,72 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
+  /chat:
+    post:
+      operationId: chatWithAI
+      tags: [chat]
+      summary: Chat with AI growth advisor
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ChatBody"
+      responses:
+        "200":
+          description: AI reply
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ChatResponse"
+        "429":
+          description: Rate limit exceeded
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+  /clip-analyze:
+    post:
+      operationId: analyzeClips
+      tags: [clips]
+      summary: Generate clip strategy for a video URL
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ClipAnalyzeBody"
+      responses:
+        "200":
+          description: Clip strategy result
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ClipAnalysisResult"
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "429":
+          description: Rate limit exceeded
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
 components:
   schemas:
     HealthStatus:
@@ -109,16 +175,13 @@ components:
       properties:
         status:
           type: string
-      required:
-        - status
+      required: [status]
     GenerateScriptBody:
       type: object
       properties:
         topic:
           type: string
-          description: The topic to generate a viral YouTube Shorts script for
-      required:
-        - topic
+      required: [topic]
     GeneratedScript:
       type: object
       properties:
@@ -128,128 +191,82 @@ components:
           type: string
         cta:
           type: string
-      required:
-        - hook
-        - body
-        - cta
+      required: [hook, body, cta]
     AnalyzeVideoBody:
       type: object
       properties:
         url:
           type: string
-          description: YouTube video URL to analyze
-      required:
-        - url
+      required: [url]
     VideoAnalysis:
       type: object
       properties:
         hook_analysis:
           type: string
-          description: Why the first 3 seconds grab viewers
         structure:
           type: string
-          description: Key scenes and video structure
         strengths:
           type: string
-          description: What makes this video successful
         weaknesses:
           type: string
-          description: What can be improved
-      required:
-        - hook_analysis
-        - structure
-        - strengths
-        - weaknesses
+      required: [hook_analysis, structure, strengths, weaknesses]
     ImprovedScript:
       type: object
       properties:
         hook:
           type: string
-          description: Stronger hook suggestion
         intro:
           type: string
-          description: Opening section of the improved script
         main_content:
           type: string
-          description: Core content of the improved script
         cta:
           type: string
-          description: Call to action
         style:
           type: string
-          description: Suggested style (funny / shocking / educational / challenge / story)
         additional_scenes:
           type: string
-          description: Additional scenes or edits to maximize retention
-      required:
-        - hook
-        - intro
-        - main_content
-        - cta
-        - style
-        - additional_scenes
+      required: [hook, intro, main_content, cta, style, additional_scenes]
     SEOData:
       type: object
       properties:
         title:
           type: string
-          description: Engaging video title
         description:
           type: string
-          description: Short, catchy description
         hashtags:
           type: array
           items:
             type: string
-          description: Trending relevant hashtags
-      required:
-        - title
-        - description
-        - hashtags
+      required: [title, description, hashtags]
     PerformanceEstimate:
       type: object
       properties:
         views_24h:
           type: string
-          description: Predicted views in 24 hours
         views_7d:
           type: string
-          description: Predicted views in 7 days
         retention_score:
           type: string
-          description: Viewer retention score as percentage
         virality_score:
           type: string
-          description: Virality potential score out of 10
-      required:
-        - views_24h
-        - views_7d
-        - retention_score
-        - virality_score
+      required: [views_24h, views_7d, retention_score, virality_score]
     VideoVersion:
       type: object
       properties:
         style:
           type: string
-          description: Style of this version
         hook:
           type: string
         script:
           type: string
-          description: Full script for this version
         why_it_works:
           type: string
-      required:
-        - style
-        - hook
-        - script
-        - why_it_works
+      required: [style, hook, script, why_it_works]
     VideoAnalysisResult:
       type: object
       properties:
         topic:
           type: string
-          description: The inferred topic of the video
         video_analysis:
           $ref: "#/components/schemas/VideoAnalysis"
         improved_script:
@@ -262,17 +279,99 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/VideoVersion"
-      required:
-        - topic
-        - video_analysis
-        - improved_script
-        - seo
-        - performance_estimate
-        - multiple_versions
+      required: [topic, video_analysis, improved_script, seo, performance_estimate, multiple_versions]
+    ChatMessage:
+      type: object
+      properties:
+        role:
+          type: string
+          enum: [user, assistant]
+        content:
+          type: string
+      required: [role, content]
+    ChatBody:
+      type: object
+      properties:
+        messages:
+          type: array
+          items:
+            $ref: "#/components/schemas/ChatMessage"
+        platform:
+          type: string
+      required: [messages]
+    ChatResponse:
+      type: object
+      properties:
+        reply:
+          type: string
+        remainingChats:
+          type: number
+        isLimitReached:
+          type: boolean
+      required: [reply]
+    ClipAnalyzeBody:
+      type: object
+      properties:
+        url:
+          type: string
+        platform:
+          type: string
+      required: [url]
+    ClipSegment:
+      type: object
+      properties:
+        clip_number:
+          type: number
+        title:
+          type: string
+        timestamp_start:
+          type: string
+        timestamp_end:
+          type: string
+        hook:
+          type: string
+        why_viral:
+          type: string
+        platform_fit:
+          type: array
+          items:
+            type: string
+      required: [clip_number, title, timestamp_start, timestamp_end, hook, why_viral, platform_fit]
+    PlatformTips:
+      type: object
+      properties:
+        tiktok:
+          type: string
+        youtube_shorts:
+          type: string
+        instagram_reels:
+          type: string
+      required: [tiktok, youtube_shorts, instagram_reels]
+    ClipAnalysisResult:
+      type: object
+      properties:
+        topic:
+          type: string
+        total_clips:
+          type: number
+        best_clip_index:
+          type: number
+        clips:
+          type: array
+          items:
+            $ref: "#/components/schemas/ClipSegment"
+        platform_tips:
+          $ref: "#/components/schemas/PlatformTips"
+        caption:
+          type: string
+        hashtags:
+          type: array
+          items:
+            type: string
+      required: [topic, total_clips, best_clip_index, clips, platform_tips, caption, hashtags]
     ErrorResponse:
       type: object
       properties:
         error:
           type: string
-      required:
-        - error
+      required: [error]
