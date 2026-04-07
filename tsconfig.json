@@ -2,18 +2,24 @@
   "compilerOptions": {
     "target": "ES2022",
     "module": "ESNext",
-    "jsx": "react-jsx",                // يدعم JSX تلقائيًا
-    "moduleResolution": "Node",
+    "moduleResolution": "node16",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    },
+    "jsx": "react-jsx",
     "strict": true,
     "esModuleInterop": true,
-    "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "rootDir": ".",                     // يشمل كل الملفات
-    "outDir": "dist",
-    "baseUrl": ".",                     // أساس البحث للـ imports
-    "paths": {
-      "@/*": ["src/*"]                  // كل @ يشير إلى مجلد src
-    }
+    "skipLibCheck": true
   },
-  "include": ["src", "artifacts"]      // كل ملفات المشروع المصدرية
+  "include": [
+    "src",
+    "artifacts/mockup-sandbox/src",
+    "artifacts/hookforge/src"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist"
+  ]
 }
