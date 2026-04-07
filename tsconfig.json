@@ -1,19 +1,18 @@
 {
-  "extends": "./tsconfig.base.json",
-  "compileOnSave": false,
-  "files": [],
-  "references": [
-    {
-      "path": "./lib/db"
-    },
-    {
-      "path": "./lib/api-client-react"
-    },
-    {
-      "path": "./lib/api-zod"
-    },
-    {
-      "path": "./lib/integrations-openai-ai-server"
-    }
-  ]
+  "name": "viral-script-generator",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/app.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "pino-http": "^10.5.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.2.2"
+  },
+  "engines": {
+    "node": ">=18"
+  }
 }
