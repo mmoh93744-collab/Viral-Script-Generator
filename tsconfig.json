@@ -1,10 +1,25 @@
-{
-  "compilerOptions": {
-    "target": "ES2020",
-    "module": "commonjs",
-    "outDir": "dist",
-    "rootDir": "src",
-    "strict": true,
-    "esModuleInterop": true
-  }
-}
+    Matched by default include pattern '**/*'
+error TS6059: File '/vercel/path0/artifacts/mockup-sandbox/src/components/ui/select.tsx' is not under 'rootDir' '/vercel/path0/src'. 'rootDir' is expected to contain all source files.
+  The file is in the program because:
+    Matched by default include pattern '**/*'
+error TS6059: File '/vercel/path0/artifacts/mockup-sandbox/src/components/ui/separator.tsx' is not under 'rootDir' '/vercel/path0/src'. 'rootDir' is expected to contain all source files.
+  The file is in the program because:
+    Matched by default include pattern '**/*'
+error TS6059: File '/vercel/path0/artifacts/mockup-sandbox/src/components/ui/sheet.tsx' is not under 'rootDir' '/vercel/path0/src'. 'rootDir' is expected to contain all source files.
+  The file is in the program because:
+    Matched by default include pattern '**/*'
+error TS6059: File '/vercel/path0/artifacts/mockup-sandbox/src/components/ui/sidebar.tsx' is not under 'rootDir' '/vercel/path0/src'. 'rootDir' is expected to contain all source files.
+  The file is in the program because:
+    Matched by default include pattern '**/*'
+error TS6059: File '/vercel/path0/artifacts/mockup-sandbox/src/components/ui/skeleton.tsx' is not under 'rootDir' '/vercel/path0/src'. 'rootDir' is expected to contain all source files.
+  The file is in the program because:
+    Matched by default include pattern '**/*'
+error TS6059: File '/vercel/path0/artifacts/mockup-sandbox/src/components/ui/slider.tsx' is not under 'rootDir' '/vercel/path0/src'. 'rootDir' is expected to contain all source files.
+  The file is in the program because:
+    Matched by default include pattern '**/*'
+error TS6059: File '/vercel/path0/artifacts/mockup-sandbox/src/components/ui/sonner.tsx' is not under 'rootDir' '/vercel/path0/src'. 'rootDir' is expected to contain all source files.
+  The file is in the program because:
+    Matched by default include pattern '**/*'
+Deployment Summary
+Assigning Custom Domains
+update: replace tsconfig.json with correct TypeScript setup - 5d2a33
